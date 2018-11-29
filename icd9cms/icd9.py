@@ -55,6 +55,30 @@ class Node:
 
         return collect_leaf_nodes(self)
 
+    def ancestors(self, depth=None) -> List:
+        def accu_ancestors(node, ancestors, curr_depth, max_depth) -> List:
+            if node is None or \
+                    (max_depth is not None and curr_depth >= max_depth):
+                return ancestors
+            ancestors.append(node.code)
+            return accu_ancestors(node.parent, ancestors, curr_depth+1, max_depth)
+
+        if self.parent is None:
+            return []
+        return accu_ancestors(self.parent, [], 0, depth)
+
+    def descendants(self, depth=None):
+        def acc_descendants(nodes, descendants, curr_depth, max_depth) -> List:
+            if max_depth is not None and curr_depth >= max_depth:
+                return descendants
+            if nodes is not None:
+                descendants.extend(n.code for n in nodes)
+                for node in nodes:
+                    acc_descendants(node.children, descendants, curr_depth+1, max_depth)
+            return descendants
+
+        return acc_descendants(self.children, [], 0, depth)
+
 
 def _strip_elements(ul: List[BSoup]) -> List[Node]:
     """Strip non-leaf pages"""
