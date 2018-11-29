@@ -10,7 +10,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tomolopolis/icd-util",
-    version='0.1',
+    version='0.2.0',
     author_email='thomas.searle@kcl.ac.uk',
     author='Tom Searle',
     packages=['icd9cms'],
